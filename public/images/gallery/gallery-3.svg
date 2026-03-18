@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="Gallery placeholder">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f97316" offset="0%" />
+      <stop stop-color="#9333ea" offset="100%" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#g3)" rx="40" />
+  <text x="50%" y="50%" fill="#fff" font-size="36" text-anchor="middle" dominant-baseline="middle" font-family="system-ui, sans-serif">
+    Gallery image
+  </text>
+</svg>

@@ -1,0 +1,19 @@
+---
+title: "Terraform patterns for scalable infrastructure"
+date: "February 2026"
+excerpt: "How to structure Terraform modules and manage state across multiple environments."
+tags:
+  - Web
+  - Product
+---
+
+## Organizing Terraform for teams
+
+When you manage multiple environments, keeping your Terraform configuration modular and DRY makes maintenance scalable.
+
+### Recommended structure
+
+- **modules/**: Reusable infrastructure components
+- **env/**: Environment overlays (dev, staging, prod)
+
+Use remote state backends with locking (e.g. Terraform Cloud, S3 + DynamoDB) to prevent concurrent changes.

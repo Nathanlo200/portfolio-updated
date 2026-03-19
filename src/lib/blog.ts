@@ -1,49 +1,69 @@
-export type BlogPost = {
+import fs from "fs";
+import path from "path";
+
+import matter from "gray-matter";
+import { marked } from "marked";
+
+export type BlogPostMeta = {
   slug: string;
   title: string;
   date: string;
   excerpt: string;
-  content: string;
+  tags: string[];
 };
 
-export const posts: BlogPost[] = [
-  {
-    slug: "secure-apis-oauth2",
-    title: "Building secure APIs with OAuth2",
-    date: "March 2026",
-    excerpt:
-      "A practical guide to implementing OAuth2 flows, securing tokens, and handling refresh workflows.",
-    content: `## OAuth2 for modern APIs
+export type BlogPost = BlogPostMeta & {
+  contentHtml: string;
+};
 
-OAuth2 is the industry standard for delegated authorization. In this post, we cover the most common grant flows, best practices for token storage, and how to protect APIs from common attacks such as token replay and CSRF.
+const blogDirectory = path.join(process.cwd(), "src", "content", "blog");
 
-### Key takeaways
+function readBlogFile(fileName: string) {
+  const fullPath = path.join(blogDirectory, fileName);
+  return fs.readFileSync(fullPath, "utf8");
+}
 
-- Use the **authorization code flow** with PKCE for public clients.
-- Store refresh tokens securely and rotate them frequently.
-- Validate access tokens on every request and implement scopes.
-`,
-  },
-  {
-    slug: "terraform-patterns-scalable-infrastructure",
-    title: "Terraform patterns for scalable infrastructure",
-    date: "February 2026",
-    excerpt:
-      "How to structure Terraform modules and manage state across multiple environments.",
-    content: `## Organizing Terraform for teams
+async function parseBlogFile(fileName: string): Promise<BlogPost> {
+  const raw = readBlogFile(fileName);
+  const { data, content } = matter(raw);
 
-When you manage multiple environments, keeping your Terraform configuration modular and DRY makes maintenance scalable.
+  const slug = fileName.replace(/\.(mdx|md)$/, "");
+  const title = String(data.title ?? "Untitled");
+  const date = String(data.date ?? "");
+  const excerpt = String(data.excerpt ?? "");
+  const tags = Array.isArray(data.tags) ? data.tags.map(String) : [];
 
-### Recommended structure
+  const contentHtml = await marked.parse(content);
 
-- **modules/**: Reusable infrastructure components
-- **env/**: Environment overlays (dev, staging, prod)
+  return {
+    slug,
+    title,
+    date,
+    excerpt,
+    tags,
+    contentHtml,
+  };
+}
 
-Use remote state backends with locking (e.g. Terraform Cloud, S3 + DynamoDB) to prevent concurrent changes.
-`,
-  },
-];
+export async function getAllPosts(): Promise<BlogPostMeta[]> {
+  if (!fs.existsSync(blogDirectory)) return [];
 
-export function getPostBySlug(slug: string) {
-  return posts.find((post) => post.slug === slug);
+  const files = fs.readdirSync(blogDirectory).filter((file) => /\.(mdx|md)$/.test(file));
+  const posts = await Promise.all(files.map((file) => parseBlogFile(file)));
+
+  const parseTime = (dateStr: string) => {
+    const time = new Date(dateStr).getTime();
+    return Number.isFinite(time) ? time : 0;
+  };
+
+  return posts.sort((a, b) => parseTime(b.date) - parseTime(a.date));
+}
+
+export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  const safeSlug = path.basename(slug);
+  const fileName = `${safeSlug}.mdx`;
+  const fullPath = path.join(blogDirectory, fileName);
+  if (!fs.existsSync(fullPath)) return undefined;
+
+  return parseBlogFile(fileName);
 }

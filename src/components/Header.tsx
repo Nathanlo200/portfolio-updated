@@ -21,11 +21,9 @@ function applyTheme(pref: ThemePreference) {
 }
 
 function useClock() {
-  const [now, setNow] = useState<Date | null>(null);
+  const [now, setNow] = useState<Date>(() => new Date());
 
   useEffect(() => {
-    setNow(new Date());
-
     const interval = window.setInterval(() => {
       setNow(new Date());
     }, 1000);
@@ -90,7 +88,15 @@ const navItems = (t: (key: string) => string) => [
   { label: t("contact"), href: "/contact" },
 ];
 
-function NavLink({ href, label }: { href: string; label: string }) {
+function NavLink({
+  href,
+  label,
+  onNavigate,
+}: {
+  href: string;
+  label: string;
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -106,14 +112,17 @@ function NavLink({ href, label }: { href: string; label: string }) {
     }
   }, [isPending]);
 
+  const handleClick = () => {
+    startTransition(() => {
+      router.push(href);
+    });
+    onNavigate?.();
+  };
+
   return (
     <button
       type="button"
-      onClick={() => {
-        startTransition(() => {
-          router.push(href);
-        });
-      }}
+      onClick={handleClick}
       className={cn(
         "rounded-full px-3 py-1 text-xs font-semibold transition",
         "cursor-pointer",
@@ -128,43 +137,37 @@ function NavLink({ href, label }: { href: string; label: string }) {
 
 export function Header() {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState<ThemePreference>("system");
+  const [theme, setTheme] = useState<ThemePreference>(() => {
+    if (typeof window === "undefined") return "system";
+    const stored = window.localStorage.getItem(THEME_KEY) as ThemePreference | null;
+    return stored ?? "system";
+  });
   const [mobileOpen, setMobileOpen] = useState(false);
   const now = useClock();
   const greeting = useMemo(
     () => getGreeting(now, "Africa/Nairobi", t),
     [now, t]
   );
-  const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const stored = window.localStorage.getItem(THEME_KEY) as ThemePreference | null;
-    const initial = stored ?? "system";
-    setTheme(initial);
-    applyTheme(initial);
-
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
     const handleChange = () => {
-      if (window.localStorage.getItem(THEME_KEY) === "system") {
+      if (theme === "system") {
         applyTheme("system");
       }
     };
 
     media.addEventListener("change", handleChange);
     return () => media.removeEventListener("change", handleChange);
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     window.localStorage.setItem(THEME_KEY, theme);
     applyTheme(theme);
   }, [theme]);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
 
   const cycleTheme = () => {
     setTheme((prev) => {
@@ -244,8 +247,13 @@ export function Header() {
       {mobileOpen ? (
         <div className="md:hidden">
           <div className="flex flex-col gap-2 bg-background/70 px-5 pb-5 pt-3 backdrop-blur">
-            {navItems.map((item) => (
-              <NavLink key={item.href} href={item.href} label={item.label} />
+            {navItems(t).map((item) => (
+              <NavLink
+                key={item.href}
+                href={item.href}
+                label={item.label}
+                onNavigate={() => setMobileOpen(false)}
+              />
             ))}
             <button
               type="button"

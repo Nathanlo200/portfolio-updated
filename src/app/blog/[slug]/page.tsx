@@ -7,8 +7,9 @@ type Props = {
   };
 };
 
-export default function PostPage({ params }: Props) {
-  const post = getPostBySlug(params.slug);
+export default async function PostPage({ params }: Props) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
@@ -19,14 +20,25 @@ export default function PostPage({ params }: Props) {
       <section className="mx-auto flex max-w-6xl flex-col gap-10">
         <header className="space-y-4">
           <h1 className="text-4xl font-extrabold sm:text-5xl">{post.title}</h1>
-          <p className="text-sm font-semibold text-foreground/60">{post.date}</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="text-sm font-semibold text-foreground/60">{post.date}</p>
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-card/20 px-3 py-1 text-[11px] font-semibold text-foreground/70"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </header>
 
-        <article className="prose max-w-4xl text-foreground/70 dark:prose-invert">
-          {post.content.split("\n\n").map((block, index) => (
-            <p key={index}>{block}</p>
-          ))}
-        </article>
+        <article
+          className="prose max-w-4xl text-foreground/70 dark:prose-invert"
+          dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+        />
       </section>
     </main>
   );

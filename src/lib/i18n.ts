@@ -74,6 +74,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     blogLooking:
       "Looking for something specific? Use the filters above or jump straight into a post. If you want help thinking through a security design or architecture tradeoff, reach out on the contact page.",
     blogGetInTouch: "Get in touch",
+    blogAll: "All",
+    tagSecurity: "Security",
+    tagWeb: "Web",
+    tagProduct: "Product",
+    tagTeam: "Team",
     // contact
     contactTitle: "Contact",
     contactIntro:
@@ -169,6 +174,11 @@ export const translations: Record<Locale, Record<string, string>> = {
     blogLooking:
       "Vous cherchez quelque chose de spécifique ? Utilisez les filtres ci-dessus ou entrez directement dans un article. Si vous avez besoin d’aide pour réfléchir à un design de sécurité ou à un compromis d’architecture, contactez-moi.",
     blogGetInTouch: "Me contacter",
+    blogAll: "Tous",
+    tagSecurity: "Sécurité",
+    tagWeb: "Web",
+    tagProduct: "Produit",
+    tagTeam: "Équipe",
     // contact
     contactTitle: "Contact",
     contactIntro:

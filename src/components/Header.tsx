@@ -97,8 +97,10 @@ function NavLink({ href, label }: { href: string; label: string }) {
   useEffect(() => {
     if (isPending) {
       document.body.classList.add("cursor-wait");
+      document.body.dataset.navigating = "true";
     } else {
       document.body.classList.remove("cursor-wait");
+      delete document.body.dataset.navigating;
     }
   }, [isPending]);
 
@@ -179,6 +181,7 @@ export function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-card/80 backdrop-blur">
+      <div className="page-progress" />
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">

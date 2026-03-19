@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col">
-      <section className="relative flex min-h-[90vh] flex-col items-center justify-center px-6 pt-28 pb-20 text-center">
+      <section data-animate-on-scroll className="relative flex min-h-[90vh] flex-col items-center justify-center px-6 pt-28 pb-20 text-center">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-1/2 top-32 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-gradient-to-br from-[#3b82f6] via-[#06b6d4] to-transparent opacity-30 blur-3xl" />
           <div className="absolute left-[12%] top-[55%] h-[320px] w-[320px] rounded-full bg-gradient-to-br from-[#f97316] via-[#f43f5e] to-transparent opacity-25 blur-3xl" />
@@ -29,23 +31,23 @@ export default function Home() {
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <a
+            <Link
               href="/about"
               className="inline-flex items-center justify-center rounded-full bg-card/20 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
             >
               About me
-            </a>
-            <a
+            </Link>
+            <Link
               href="/work"
               className="inline-flex items-center justify-center rounded-full border border-border bg-card/10 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/20"
             >
               Explore work
-            </a>
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-20">
+      <section data-animate-on-scroll className="mx-auto max-w-6xl px-6 pb-20">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-border bg-card p-8">
             <h2 className="text-lg font-semibold text-foreground">Security-first engineering</h2>
@@ -75,18 +77,18 @@ export default function Home() {
             I write about web security, tooling, and the day-to-day tradeoffs of building products. Check out the latest posts or dive in from the blog page.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a
+            <Link
               href="/blog"
               className="inline-flex items-center justify-center rounded-full bg-card/20 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
             >
               Read the blog
-            </a>
-            <a
+            </Link>
+            <Link
               href="/contact"
               className="inline-flex items-center justify-center rounded-full border border-border bg-card/10 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/20"
             >
               Say hello
-            </a>
+            </Link>
           </div>
         </div>
       </section>

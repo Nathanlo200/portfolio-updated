@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "./TranslationProvider";
 
 const THEME_KEY = "theme-preference";
 
@@ -46,18 +47,18 @@ function formatTime(now: Date | null, timeZone: string) {
   }).format(now);
 }
 
-function getGreeting(now: Date | null, timeZone: string) {
-  if (!now) return "Hello";
+function getGreeting(now: Date | null, timeZone: string, t: (key: string) => string) {
+  if (!now) return t("greetingHello");
 
   const zoned = new Date(
     now.toLocaleString("en-US", { timeZone })
   );
   const hour = zoned.getHours();
 
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
+  if (hour < 12) return t("greetingMorning");
+  if (hour < 18) return t("greetingAfternoon");
 
-  return "Good evening";
+  return t("greetingEvening");
 }
 
 function TimeZoneClock({
@@ -79,13 +80,14 @@ function TimeZoneClock({
   );
 }
 
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Work", href: "/work" },
-  { label: "Blog", href: "/blog" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Contact", href: "/contact" },
+// Note: translation is injected via useTranslation() inside Header
+const navItems = (t: (key: string) => string) => [
+  { label: t("home"), href: "/" },
+  { label: t("about"), href: "/about" },
+  { label: t("work"), href: "/work" },
+  { label: t("blog"), href: "/blog" },
+  { label: t("gallery"), href: "/gallery" },
+  { label: t("contact"), href: "/contact" },
 ];
 
 function NavLink({ href, label }: { href: string; label: string }) {
@@ -125,12 +127,13 @@ function NavLink({ href, label }: { href: string; label: string }) {
 }
 
 export function Header() {
+  const { t } = useTranslation();
   const [theme, setTheme] = useState<ThemePreference>("system");
   const [mobileOpen, setMobileOpen] = useState(false);
   const now = useClock();
   const greeting = useMemo(
-    () => getGreeting(now, "Africa/Nairobi"),
-    [now]
+    () => getGreeting(now, "Africa/Nairobi", t),
+    [now, t]
   );
   const pathname = usePathname();
 
@@ -172,7 +175,7 @@ export function Header() {
   };
 
   const themeLabel =
-    theme === "system" ? "System" : theme === "dark" ? "Dark" : "Light";
+    theme === "system" ? t("themeSystem") : theme === "dark" ? t("themeDark") : t("themeLight");
 
   useEffect(() => {
     window.localStorage.setItem(THEME_KEY, theme);
@@ -219,7 +222,7 @@ export function Header() {
           </button>
 
           <nav className="hidden items-center gap-2 rounded-full bg-card/20 px-3 py-2 shadow-sm backdrop-blur md:flex">
-            {navItems.map((item) => (
+            {navItems(t).map((item) => (
               <NavLink key={item.href} href={item.href} label={item.label} />
             ))}
             <button
@@ -229,8 +232,8 @@ export function Header() {
                 "rounded-full px-3 py-1 text-xs font-semibold transition",
                 "text-foreground/70 hover:text-foreground hover:bg-card/30"
               )}
-              aria-label="Toggle theme"
-              title={`Theme: ${themeLabel} (click to cycle)`}
+              aria-label={t("themeSystem")}
+              title={`${t("themeSystem")}: ${themeLabel}`}
             >
               {theme === "dark" ? "🌙" : theme === "light" ? "☀️" : "🌓"} {themeLabel}
             </button>

@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslation } from "@/components/TranslationProvider";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <main className="relative flex min-h-screen flex-col">
       <section data-animate-on-scroll className="relative flex min-h-[90vh] flex-col items-center justify-center px-6 pt-28 pb-20 text-center">
@@ -19,15 +24,13 @@ export default function Home() {
           </div>
 
           <h1 className="mt-10 text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-6xl">
-            Building secure, scalable platforms
+            {t("homeTagline")}
             <br />
-            that people love to use
+            {t("homeSubtagline")}
           </h1>
 
           <p className="mt-6 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
-            I&apos;m a software engineer with 5+ years delivering secure full-stack
-            products and strengthening teams through thoughtful, practical
-            security.
+            {t("aboutIntro")}
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -35,13 +38,13 @@ export default function Home() {
               href="/about"
               className="inline-flex items-center justify-center rounded-full bg-card/20 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
             >
-              About me
+              {t("homeAbout")}
             </Link>
             <Link
               href="/work"
               className="inline-flex items-center justify-center rounded-full border border-border bg-card/10 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/20"
             >
-              Explore work
+              {t("homeWork")}
             </Link>
           </div>
         </div>
@@ -50,51 +53,51 @@ export default function Home() {
       <section data-animate-on-scroll className="mx-auto max-w-6xl px-6 pb-20">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-border bg-card p-8">
-            <h2 className="text-lg font-semibold text-foreground">Security-first engineering</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t("homeSecurity")}</h2>
             <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-              I build systems with defense in depth, automated testing, and threat-informed design so your product stays resilient at scale.
+              {t("homeSecurityCopy")}
             </p>
           </div>
 
           <div className="rounded-3xl border border-border bg-card p-8">
-            <h2 className="text-lg font-semibold text-foreground">End-to-end ownership</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t("homeOwnership")}</h2>
             <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-              From concept to launch, I ship fast while keeping architecture maintainable, secure, and aligned with business needs.
+              {t("homeOwnershipCopy")}
             </p>
           </div>
 
           <div className="rounded-3xl border border-border bg-card p-8">
-            <h2 className="text-lg font-semibold text-foreground">Mentoring & leadership</h2>
+            <h2 className="text-lg font-semibold text-foreground">{t("homeMentoring")}</h2>
             <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-              I help teams grow with clear processes, focused feedback, and shared ownership so engineers feel confident shipping high-quality work.
+              {t("homeMentoringCopy")}
             </p>
           </div>
         </div>
 
         <div className="mt-14 rounded-3xl border border-border bg-card p-10">
-          <h2 className="text-2xl font-semibold text-foreground">Latest on the blog</h2>
+          <h2 className="text-2xl font-semibold text-foreground">{t("homeBlogHeader")}</h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/70">
-            I write about web security, tooling, and the day-to-day tradeoffs of building products. Check out the latest posts or dive in from the blog page.
+            {t("homeBlogCopy")}
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href="/blog"
               className="inline-flex items-center justify-center rounded-full bg-card/20 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
             >
-              Read the blog
+              {t("homeReadBlog")}
             </Link>
             <Link
               href="/contact"
               className="inline-flex items-center justify-center rounded-full border border-border bg-card/10 px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/20"
             >
-              Say hello
+              {t("homeSayHello")}
             </Link>
           </div>
         </div>
       </section>
 
       <footer className="border-t border-border py-10 text-center text-xs text-foreground/60">
-        © {new Date().getFullYear()} Nathan Lomito — built with Next.js.
+        {t("footer", { year: String(new Date().getFullYear()) })}
       </footer>
     </main>
   );

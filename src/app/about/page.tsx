@@ -1,17 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { Download } from "lucide-react";
+import { useTranslation } from "@/components/TranslationProvider";
 
 export default function AboutPage() {
+  const { t } = useTranslation();
+
   return (
     <main className="min-h-screen px-6 pb-20 pt-28 text-foreground">
-      <section className="mx-auto flex max-w-6xl flex-col gap-10">
+      <section data-animate-on-scroll className="mx-auto flex max-w-6xl flex-col gap-10">
         <header className="space-y-4">
-          <h1 className="text-4xl font-extrabold sm:text-5xl">About</h1>
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t("aboutTitle")}</h1>
           <p className="max-w-3xl text-base leading-relaxed text-foreground/70">
-            I&apos;m Nathan Lomito — a software engineer and cybersecurity
-            specialist with over 5 years of experience building reliable, secure
-            web platforms. I focus on end-to-end systems: from infrastructure and
-            APIs to frontend UX.
+            {t("aboutIntro")}
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -21,7 +23,7 @@ export default function AboutPage() {
               className="inline-flex items-center gap-2 rounded-full bg-card/20 px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
             >
               <Download className="h-4 w-4" />
-              Download CV (EN)
+              {t("aboutDownloadEn")}
             </a>
             <a
               href="/Nathan_Lomito_CV_Professional_FR.pdf"
@@ -29,7 +31,7 @@ export default function AboutPage() {
               className="inline-flex items-center gap-2 rounded-full bg-card/20 px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
             >
               <Download className="h-4 w-4" />
-              Download CV (FR)
+              {t("aboutDownloadFr")}
             </a>
           </div>
         </header>
@@ -49,25 +51,21 @@ export default function AboutPage() {
           <div className="md:col-span-2">
             <div className="grid gap-6 md:grid-cols-2">
               <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-                <h2 className="text-xl font-semibold">Experience</h2>
+                <h2 className="text-xl font-semibold">{t("aboutExperience")}</h2>
                 <p className="mt-3 text-sm text-foreground/70">
-                  5+ years designing and shipping software for startups and
-                  enterprise teams, with a strong focus on security, reliability,
-                  and scalability.
+                  {t("aboutExperienceCopy")}
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-foreground/70">
-                  <li>• Led secure API design and implementation</li>
-                  <li>• Built observability pipelines (metrics + logging + alerts)</li>
-                  <li>• Developed incident response tooling and runbooks</li>
+                  <li>• {t("aboutExperienceList1")}</li>
+                  <li>• {t("aboutExperienceList2")}</li>
+                  <li>• {t("aboutExperienceList3")}</li>
                 </ul>
               </div>
 
               <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-                <h2 className="text-xl font-semibold">Focus areas</h2>
+                <h2 className="text-xl font-semibold">{t("aboutFocus")}</h2>
                 <p className="mt-3 text-sm text-foreground/70">
-                  I help teams build systems that are resilient, performant, and
-                  secure. My work covers everything from infrastructure as code to
-                  application hardening.
+                  {t("aboutFocusCopy")}
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-foreground/70">
                   <li>• API security & authentication</li>
@@ -79,9 +77,9 @@ export default function AboutPage() {
 
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-                <h2 className="text-xl font-semibold">Tech stack</h2>
+                <h2 className="text-xl font-semibold">{t("aboutStack")}</h2>
                 <p className="mt-3 text-sm text-foreground/70">
-                  The tools I use to design and ship software reliably.
+                  {t("aboutStackCopy")}
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-foreground/70">
                   <li>• TypeScript, Node.js, Next.js, React</li>
@@ -91,9 +89,9 @@ export default function AboutPage() {
               </div>
 
               <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-                <h2 className="text-xl font-semibold">Tools</h2>
+                <h2 className="text-xl font-semibold">{t("aboutTools")}</h2>
                 <p className="mt-3 text-sm text-foreground/70">
-                  Used for building, testing, monitoring, and securing systems.
+                  {t("aboutToolsCopy")}
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-foreground/70">
                   <li>• GitHub Actions, Docker, Kubernetes</li>

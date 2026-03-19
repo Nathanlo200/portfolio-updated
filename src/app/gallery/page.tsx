@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslation } from "@/components/TranslationProvider";
 
 const IMAGES = [
   "/images/gallery/gallery-1.svg",
@@ -14,6 +15,7 @@ const IMAGES = [
 const PASSWORD = "hello word";
 
 export default function GalleryPage() {
+  const { t } = useTranslation();
   const [input, setInput] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,23 +29,23 @@ export default function GalleryPage() {
       return;
     }
 
-    setError("Incorrect password. Try again.");
+    setError(t("galleryPasswordError"));
   };
 
   return (
     <main className="min-h-screen px-6 pb-20 pt-28 text-foreground">
       <section data-animate-on-scroll className="mx-auto flex max-w-6xl flex-col gap-10">
         <header className="space-y-4">
-          <h1 className="text-4xl font-extrabold sm:text-5xl">Gallery</h1>
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t("galleryTitle")}</h1>
           <p className="max-w-3xl text-base leading-relaxed text-foreground/70">
-            A curated collection of snapshots from mobile and web projects.
+            {t("galleryIntro")}
           </p>
         </header>
 
         {!unlocked ? (
           <div className="rounded-3xl border border-border bg-card p-10 text-center">
             <p className="text-sm text-foreground/70">
-              This gallery is protected. Enter the password to view the content.
+              {t("galleryLockedText")}
             </p>
 
             <div className="mx-auto mt-6 flex max-w-md flex-col gap-3">
@@ -51,7 +53,7 @@ export default function GalleryPage() {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 type="password"
-                placeholder="Enter password"
+                placeholder={t("galleryPasswordPlaceholder")}
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition focus:border-foreground/30"
               />
 
@@ -64,7 +66,7 @@ export default function GalleryPage() {
                 onClick={unlock}
                 className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-card/40 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-card/50"
               >
-                Unlock gallery
+                {t("galleryUnlockButton")}
               </button>
             </div>
           </div>

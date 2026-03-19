@@ -5,8 +5,10 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "../components/Header";
 import { PageWrapper } from "../components/PageWrapper";
+import { TranslationProvider } from "../components/TranslationProvider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { defaultLocale } from "@/lib/i18n";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -32,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html lang={defaultLocale} className={cn("font-sans", inter.variable)}>
       <head>
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function() {
@@ -54,8 +56,10 @@ export default function RootLayout({
           "min-h-screen bg-background text-foreground"
         )}
       >
-        <Header />
-        <PageWrapper>{children}</PageWrapper>
+        <TranslationProvider>
+          <Header />
+          <PageWrapper>{children}</PageWrapper>
+        </TranslationProvider>
         <Analytics />
         <SpeedInsights />
       </body>

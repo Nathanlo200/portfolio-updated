@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslation } from "@/components/TranslationProvider";
 
 const projects = [
   {
@@ -32,14 +35,15 @@ const projects = [
 ];
 
 export default function WorkPage() {
+  const { t } = useTranslation();
+
   return (
     <main className="min-h-screen px-6 pb-20 pt-28 text-foreground">
       <section data-animate-on-scroll className="mx-auto flex max-w-6xl flex-col gap-10">
         <header className="space-y-4">
-          <h1 className="text-4xl font-extrabold sm:text-5xl">Work</h1>
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t("workTitle")}</h1>
           <p className="max-w-3xl text-base leading-relaxed text-foreground/70">
-            Selected projects highlighting security, scalability, and user
-            experience.
+            {t("workIntro")}
           </p>
         </header>
 

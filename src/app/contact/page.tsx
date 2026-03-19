@@ -2,10 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import { Github, Mail, MessageCircle } from "lucide-react";
+import { useTranslation } from "@/components/TranslationProvider";
 
 type ContactStatus = "idle" | "sending" | "sent" | "error";
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -43,18 +45,18 @@ export default function ContactPage() {
     <main className="min-h-screen px-6 pb-20 pt-28 text-foreground">
       <section data-animate-on-scroll className="mx-auto flex max-w-6xl flex-col gap-10">
         <header className="space-y-4">
-          <h1 className="text-4xl font-extrabold sm:text-5xl">Contact</h1>
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t("contactTitle")}</h1>
           <p className="max-w-3xl text-base leading-relaxed text-foreground/70">
-            If you&apos;re looking to hire me or collaborate on a project, reach out directly using one of the options below.
+            {t("contactIntro")}
           </p>
         </header>
 
         <div className="grid gap-10 lg:grid-cols-2">
           <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-            <h2 className="text-xl font-semibold text-foreground">Reach me directly</h2>
+            <h2 className="text-xl font-semibold text-foreground">{t("contactReachMe")}</h2>
             <div className="mt-6 space-y-6 text-foreground/70">
               <div>
-                <p className="font-semibold text-foreground">Email</p>
+                <p className="font-semibold text-foreground">{t("contactEmailLabel")}</p>
                 <a
                   href="mailto:nathanlomito@gmail.com"
                   className="inline-flex items-center gap-2 text-foreground/70 transition hover:text-foreground"
@@ -64,7 +66,7 @@ export default function ContactPage() {
                 </a>
               </div>
               <div>
-                <p className="font-semibold text-foreground">WhatsApp</p>
+                <p className="font-semibold text-foreground">{t("contactWhatsAppLabel")}</p>
                 <a
                   href="https://wa.me/254797595153"
                   target="_blank"
@@ -76,7 +78,7 @@ export default function ContactPage() {
                 </a>
               </div>
               <div>
-                <p className="font-semibold text-foreground">GitHub</p>
+                <p className="font-semibold text-foreground">{t("contactGitHubLabel")}</p>
                 <a
                   href="https://github.com/Nathanlo200/"
                   target="_blank"
@@ -91,22 +93,22 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
-            <h2 className="text-xl font-semibold text-foreground">What I&apos;m looking for</h2>
+            <h2 className="text-xl font-semibold text-foreground">{t("contactLooking")}</h2>
             <p className="mt-4 text-sm leading-relaxed text-foreground/70">
-              I&apos;m typically interested in full-stack, security-focused, or tooling projects where I can help build scalable systems, improve security posture, and support teams with strong engineering practices.
+              {t("contactLookingCopy")}
             </p>
             <ul className="mt-6 space-y-3 text-sm text-foreground/70">
               <li className="flex items-start gap-2">
                 <span className="mt-1 inline-block h-2 w-2 rounded-full bg-primary" />
-                Remote-friendly engagements (contract or full-time)
+                {t("contactRemote")}
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 inline-block h-2 w-2 rounded-full bg-primary" />
-                Security engineering, audit readiness, or secure infrastructure
+                {t("contactSecurity")}
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 inline-block h-2 w-2 rounded-full bg-primary" />
-                Mentor-driven collaboration and clear communication
+                {t("contactMentor")}
               </li>
             </ul>
           </div>

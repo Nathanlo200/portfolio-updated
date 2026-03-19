@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { Github, Mail, MessageCircle } from "lucide-react";
 
 type ContactStatus = "idle" | "sending" | "sent" | "error";
 
@@ -56,8 +57,9 @@ export default function ContactPage() {
                 <p className="font-semibold text-foreground">Email</p>
                 <a
                   href="mailto:nathanlomito@gmail.com"
-                  className="text-foreground/70 transition hover:text-foreground"
+                  className="inline-flex items-center gap-2 text-foreground/70 transition hover:text-foreground"
                 >
+                  <Mail className="h-4 w-4" />
                   nathanlomito@gmail.com
                 </a>
               </div>
@@ -67,8 +69,9 @@ export default function ContactPage() {
                   href="https://wa.me/254797595153"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-foreground/70 transition hover:text-foreground"
+                  className="inline-flex items-center gap-2 text-foreground/70 transition hover:text-foreground"
                 >
+                  <MessageCircle className="h-4 w-4" />
                   +254 797 595 153
                 </a>
               </div>
@@ -78,8 +81,9 @@ export default function ContactPage() {
                   href="https://github.com/Nathanlo200/"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-foreground/70 transition hover:text-foreground"
+                  className="inline-flex items-center gap-2 text-foreground/70 transition hover:text-foreground"
                 >
+                  <Github className="h-4 w-4" />
                   github.com/Nathanlo200
                 </a>
               </div>

@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { Download } from "lucide-react";
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen px-6 pb-20 pt-28 text-foreground">
-      <section data-animate-on-scroll className="mx-auto flex max-w-6xl flex-col gap-10">
+      <section className="mx-auto flex max-w-6xl flex-col gap-10">
         <header className="space-y-4">
           <h1 className="text-4xl font-extrabold sm:text-5xl">About</h1>
           <p className="max-w-3xl text-base leading-relaxed text-foreground/70">
@@ -12,6 +13,25 @@ export default function AboutPage() {
             web platforms. I focus on end-to-end systems: from infrastructure and
             APIs to frontend UX.
           </p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="/Nathan_Lomito_CV_Professional_EN.pdf"
+              download
+              className="inline-flex items-center gap-2 rounded-full bg-card/20 px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
+            >
+              <Download className="h-4 w-4" />
+              Download CV (EN)
+            </a>
+            <a
+              href="/Nathan_Lomito_CV_Professional_FR.pdf"
+              download
+              className="inline-flex items-center gap-2 rounded-full bg-card/20 px-4 py-2 text-sm font-semibold text-foreground shadow-sm transition hover:bg-card/30"
+            >
+              <Download className="h-4 w-4" />
+              Download CV (FR)
+            </a>
+          </div>
         </header>
 
         <div className="grid gap-6 md:grid-cols-3">

@@ -5,6 +5,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "../components/Header";
 import { PageWrapper } from "../components/PageWrapper";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -54,6 +55,7 @@ export default function RootLayout({
       >
         <Header />
         <PageWrapper>{children}</PageWrapper>
+        <Analytics />
       </body>
     </html>
   );

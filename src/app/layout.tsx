@@ -36,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang={defaultLocale} className={cn("font-sans", inter.variable)}>
       <head>
+        <link rel="icon" href="../images/IMG_0089.jpeg" />
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function() {
             try {
